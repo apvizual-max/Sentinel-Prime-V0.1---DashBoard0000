@@ -1,0 +1,41 @@
+//@version=6
+indicator("IND - v24.6 - THE MIND COMPONENT", overlay=true)
+
+// ── TIER 1: THE MIND & DIVERGENCE (Now) ───────────────────────────────────
+v20_sma      = ta.sma(close, 20)
+m200_sma     = ta.vwma(close, 200) 
+atr14        = ta.atr(14)
+vwap_val     = ta.vwap
+mfi_val      = ta.mfi(hlc3, 14)
+
+// MFI Divergence (Now)
+div_long_now  = low < low[1] and mfi_val > mfi_val[1]
+div_short_now = high > high[1] and mfi_val < mfi_val[1]
+
+// Yellow X Momentum (v24.6 Refined)
+v_ema5  = ta.ema(volume, 5)
+v_ema15 = ta.ema(volume, 15)
+v_osc   = ((v_ema5 - v_ema15) / math.max(v_ema15, 1.0)) * 100
+atr10   = ta.atr(10)
+atr20   = ta.atr(20)
+yellow_x = v_osc > 20 and atr10 > atr20
+
+// RSI2 Trap (v20)
+raw_delta = volume * (close - open) / math.max(high - low, syminfo.mintick)
+delta_sma_v20 = ta.sma(raw_delta, 20)
+rsi2    = ta.rsi(close, 2)
+ss_trap = (rsi2 > 94 and delta_sma_v20 < 0) or (rsi2 < 6 and delta_sma_v20 > 0)
+
+// VSA Accumulation Check
+avg_vol      = ta.sma(volume, 20)
+ats_v_con    = volume < avg_vol * 0.75
+ats_spring   = low < m200_sma and close > open[1]
+ats_acc      = ats_v_con and ats_spring
+
+plotshape(div_long_now, "Bull Div Now", shape.triangleup, location.belowbar, color.lime, size=size.small)
+plotshape(div_short_now, "Bear Div Now", shape.triangledown, location.abovebar, color.red, size=size.small)
+plotshape(yellow_x, "Yellow X", shape.xcross, location.abovebar, color.yellow, size=size.small)
+plotshape(ats_acc, "VSA Accum", shape.diamond, location.belowbar, color.aqua, size=size.small)
+
+plot(v20_sma, "Mind Baseline", color.gray)
+plot(m200_sma, "Institutional Anchor", color.white, linewidth=2)

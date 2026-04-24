@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-s-green: #00FF00;
+  --color-s-red: #DC143C;
+  --color-s-yellow: #FFD700;
+  --color-s-bg: #050505;
+  --color-s-card: #0A0A0A;
+  --color-s-border: #1F1F1F;
+  --color-s-text: #8E9299;
+}
+
+@layer base {
+  body {
+    @apply bg-s-bg text-s-text font-sans selection:bg-s-yellow selection:text-black;
+  }
+}
+
+@layer components {
+  .hardware-border {
+    @apply border border-s-border relative;
+  }
+  
+  .hardware-border::after {
+    content: '';
+    @apply absolute -inset-[1px] border border-white/5 pointer-events-none rounded-[inherit];
+  }
+
+  .glass-panel {
+    @apply bg-s-card/80 backdrop-blur-md border border-s-border shadow-2xl;
+  }
+  
+  .neon-glow-green { box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); }
+  .neon-glow-red { box-shadow: 0 0 15px rgba(220, 20, 60, 0.2); }
+  .neon-glow-yellow { box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
+}

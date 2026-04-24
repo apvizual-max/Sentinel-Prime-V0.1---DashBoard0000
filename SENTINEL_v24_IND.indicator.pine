@@ -1,0 +1,43 @@
+//@version=6
+indicator("IND - v24.6 - SENTINEL COMPONENT", overlay=true)
+
+// ── TIER 2: SENTINEL & DIVERGENCE (Later) ──────────────────────────────────
+h100_rng = ta.highest(high, 100) - ta.lowest(low, 100)
+h100_std = ta.stdev(close, 100)
+hurst100 = math.log(nz(h100_rng) / (nz(h100_std) + syminfo.mintick)) / math.log(100)
+h_percentile = ta.percentrank(hurst100, 100)
+h_gate = h_percentile > 60 
+
+f_later_mfi() => 
+    mval = ta.mfi(hlc3, 14)
+    [low < low[1] and mval > mval[1], high > high[1] and mval < mval[1]]
+
+[div_long_later, div_short_later] = request.security(syminfo.tickerid, "1M", f_later_mfi())
+
+// Stable Wyckoff (v24.3.2)
+vol_sma20  = ta.sma(volume, 20)
+lowest_20  = ta.lowest(low, 20)
+highest_20 = ta.highest(high, 20)
+is_spring   = low < lowest_20[1] and close > lowest_20[1] and volume > vol_sma20
+is_upthrust = high > highest_20[1] and close < highest_20[1] and volume > vol_sma20
+
+// Footprint Order Flow (v24.4.1 Method Compliance)
+foot_data   = request.footprint(1, 70.0, 60.0)
+has_foot    = not na(foot_data)
+delta_sign  = has_foot ? foot_data.buy_volume() - foot_data.sell_volume() : 0.0
+total_vol_f = has_foot ? foot_data.buy_volume() + foot_data.sell_volume() : volume
+delta_ratio = total_vol_f > 0 ? (delta_sign / total_vol_f) : 0.0
+smooth_delta = ta.sma(delta_ratio, 3)
+
+// Institutional VSA Anchors (Distribution)
+avg_vol      = ta.sma(volume, 20)
+ats_dist     = volume < avg_vol * 0.75 and high > high[1] and close < open
+
+plotshape(is_spring, "Wyckoff Spring", shape.triangleup, location.belowbar, color.lime, size=size.normal, text="SPRING")
+plotshape(is_upthrust, "Wyckoff Upthrust", shape.triangledown, location.abovebar, color.red, size=size.normal, text="UPTHRUST")
+plotshape(div_long_later, "Bull Div Later", shape.triangleup, location.belowbar, color.aqua, size=size.normal, text="DIV_LAT")
+plotshape(div_short_later, "Bear Div Later", shape.triangledown, location.abovebar, color.orange, size=size.normal, text="DIV_LAT")
+plotshape(ats_dist, "VSA Distribution", shape.diamond, location.abovebar, color.red, size=size.small)
+
+// Highlight High persistence zones
+bgcolor(h_gate ? color.new(color.aqua, 90) : na)

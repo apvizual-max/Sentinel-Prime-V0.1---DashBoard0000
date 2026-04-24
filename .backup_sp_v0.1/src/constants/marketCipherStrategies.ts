@@ -1,0 +1,22 @@
+export const MARKET_CIPHER_STRATEGIES = [
+  { id: 1, name: "MC-B Hidden Divergence Scalp", desc: "Correlates MC-B hidden bull div with Sentinel's Probe 101 velocity spike.", style: "scalp", trigger: "Hidden Bull Div + Probe 101 Spike" },
+  { id: 2, name: "Yellow X Dragon Trap", desc: "Triggers on high-precision confluence between Yellow X exhaustion and Dragon Traps.", style: "scalp", trigger: "Yellow X + Trap (Probe 138)" },
+  { id: 3, name: "MFI River Reversion", desc: "Uses MFI river crossover for intra-trend mean reversion.", style: "dayTrade", trigger: "MFI > 50 / < -50" },
+  { id: 4, name: "God-Conviction Volley", desc: "Executes Lucas-Prime Volleys upon Green Dot alignment.", style: "dayTrade", trigger: "MC Green Dot + Volley Confluence" },
+  { id: 5, name: "Dezaster DNA Veto-Flow", desc: "Short-side flow detection via DNA veto logic during overheated cycles.", style: "scalp", trigger: "DNA Veto Condition" },
+  { id: 6, name: "Hurst/MFI Swing Sync", desc: "Swing-trade entries based on Hurst persistence > 0.6 and MFI river expansion.", style: "swing", trigger: "Hurst Persistence + MFI Expand" },
+  { id: 7, name: "Whale Wallet Follower", desc: "Macro-scale accumulation signal aligned with price floor support.", style: "invest", trigger: "Large Volume Spike + Price Support" },
+  { id: 8, name: "Fractal Dimension Breakout", desc: "Entry on FDI node 165 anomaly detected during stable price action.", style: "dayTrade", trigger: "FDI Node 165 Anomaly" },
+  { id: 9, name: "Dynamic Support Pivot", desc: "Macro-level Fibonacci pivot usage with Sentinel mean-reversion gating.", style: "invest", trigger: "Fib Pivot + Probe 151 Mean Revert" },
+  { id: 10, name: "Sub-Tick Velocity Cloak", desc: "HFT-inspired scalp entries based on probe 101 velocity.", style: "scalp", trigger: "Probe 101 Velocity > Threshold" },
+  { id: 11, name: "Panic Lung Absorber", desc: "Counter-trend scalp entry on institutional panic absorption (Probe 145).", style: "scalp", trigger: "Probe 145 Panic Detection" },
+  { id: 12, name: "Flow-Decay Momentum Scalp", desc: "Momentum entries based on Flow decay analysis (Probe 170).", style: "dayTrade", trigger: "Probe 170 Momentum Flow" },
+  { id: 13, name: "Waveform Resonance Swing", desc: "Resonance detection using Echo (Probe 140) in swing conditions.", style: "swing", trigger: "Probe 140 Resonance" },
+  { id: 14, name: "Quant Mean Z-Score Entry", desc: "Statistical entry on Z-Score (Probe 251) oversold condition.", style: "dayTrade", trigger: "Probe 251 Z-Score Extreme" },
+  { id: 15, name: "Sovereign Terminal Veto", desc: "Emergency exit trigger based on Terminal Veto conditions (Probe 200).", style: "invest", trigger: "Probe 200 Terminal Exit" },
+  { id: 16, name: "Neural Bias Integration", desc: "KI resolver bias amplification via integrated Neural node.", style: "dayTrade", trigger: "KI Shard Resolver Bias" },
+  { id: 17, name: "Centroid Anchor VWAP", desc: "Anchored VWAP target entry for swing trades.", style: "swing", trigger: "Price Reaches VWAP Anchor" },
+  { id: 18, name: "Cloak Jitter Scalp", desc: "Scalp entry exploiting thermal jitter (Probe 121) noise.", style: "scalp", trigger: "Probe 121 Jitter Noise" },
+  { id: 19, name: "Order-Flow Press", desc: "Institutional wall-press detection via OFI (Probe 105).", style: "dayTrade", trigger: "Probe 105 Order Flow Spike" },
+  { id: 20, name: "Sovereign-Cipher Unified Bias", desc: "Master confluence trigger for maximum volatility alignment.", style: "invest", trigger: "MC-B Logic + Sentinel Probe Confluence" }
+];
